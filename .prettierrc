@@ -1,8 +1,11 @@
 {
   "semi": true,
-  "trailingComma": "none",
-  "singleQuote": true,
+  "trailingComma": "es5",
+  "singleQuote": false,
   "tabWidth": 2,
   "useTabs": false,
-  "parser": "json"
+  "printWidth": 100,
+  "bracketSpacing": true,
+  "arrowParens": "always",
+  "endOfLine": "auto"
 }

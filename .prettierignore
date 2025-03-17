@@ -1,0 +1,53 @@
+# Build outputs
+.next/
+build/
+dist/
+out/
+coverage/
+
+# Package manager
+node_modules/
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# Husky
+.husky/
+
+# Git
+.git/
+.gitignore
+
+# GitHub
+.github/
+
+# Config files
+.eslintrc
+.prettierrc
+.lintstagedrc
+*.config.js
+*.config.ts
+
+# Environment
+.env*
+.dockerignore
+
+# Cache
+.cache/
+.eslintcache
+
+# Public assets
+public/
+*.ico
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.woff
+*.woff2
+*.ttf
+*.eot
+
+# Markdown
+*.md 

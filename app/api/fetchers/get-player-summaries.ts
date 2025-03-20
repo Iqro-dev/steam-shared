@@ -1,7 +1,6 @@
 import { fetchApi } from "../fetch-api";
 import { STEAM_API_BASE_URL, STEAM_API_ENDPOINTS } from "../config";
-import type {} from "../types";
-import { Player, PlayerSummariesResponse } from "../types/player";
+import type { Player, PlayerSummariesResponse } from "../types";
 
 export const getPlayerSummaries = async (steamIds: string): Promise<Player[]> => {
   const API_KEY = process.env.NEXT_PUBLIC_API_KEY;

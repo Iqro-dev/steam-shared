@@ -9,6 +9,8 @@ export function useSteamId() {
     setSteamIdCookie: (token: string) => {
       setCookies(STEAM_ID_COOKIE, token, {
         path: "/",
+        maxAge: 400 * 24 * 60 * 60,
+        expires: new Date(Date.now() + 400 * 24 * 60 * 60 * 1000),
       });
     },
     removeSteamIdCookie: () => {

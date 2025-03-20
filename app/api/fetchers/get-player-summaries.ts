@@ -1,5 +1,5 @@
 import { fetchApi } from "../fetch-api";
-import { API_ENDPOINTS } from "../config";
+import { STEAM_API_BASE_URL, STEAM_API_ENDPOINTS } from "../config";
 import type {} from "../types";
 import { Player, PlayerSummariesResponse } from "../types/player";
 
@@ -10,7 +10,7 @@ export const getPlayerSummaries = async (steamIds: string): Promise<Player[]> =>
     throw new Error("Steam API key is not defined in environment variables");
   }
 
-  const endpoint = `${API_ENDPOINTS.STEAM.BASE_URL}${API_ENDPOINTS.STEAM.ROUTES.PLAYER_SUMMARIES}/?key=${API_KEY}&steamids=${steamIds}`;
+  const endpoint = `${STEAM_API_BASE_URL}${STEAM_API_ENDPOINTS.PLAYER_SUMMARIES}/?key=${API_KEY}&steamids=${steamIds}`;
 
   try {
     const response = await fetchApi<PlayerSummariesResponse>(endpoint);

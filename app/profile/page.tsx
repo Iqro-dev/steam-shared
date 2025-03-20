@@ -15,6 +15,7 @@ export default async function Profile() {
     friendsList = await getFriendsList(steamId);
     steamIds = friendsList.map((friend) => friend.steamid).join(",");
     playerSummaries = await getPlayerSummaries(steamIds);
+    playerSummaries.sort((a, b) => a.personaname.localeCompare(b.personaname));
   }
 
   return (

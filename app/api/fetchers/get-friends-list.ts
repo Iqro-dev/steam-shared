@@ -1,5 +1,5 @@
 import { fetchApi } from "../fetch-api";
-import { API_ENDPOINTS } from "../config";
+import { STEAM_API_BASE_URL, STEAM_API_ENDPOINTS } from "../config";
 import type { Friend, FriendsListResponse } from "../types";
 
 export const getFriendsList = async (steamId: string): Promise<Friend[]> => {
@@ -9,7 +9,7 @@ export const getFriendsList = async (steamId: string): Promise<Friend[]> => {
     throw new Error("Steam API key is not defined in environment variables");
   }
 
-  const endpoint = `${API_ENDPOINTS.STEAM.BASE_URL}${API_ENDPOINTS.STEAM.ROUTES.FRIENDS_LIST}/?key=${API_KEY}&steamid=${steamId}&relationship=friend`;
+  const endpoint = `${STEAM_API_BASE_URL}${STEAM_API_ENDPOINTS.FRIENDS_LIST}/?key=${API_KEY}&steamid=${steamId}&relationship=friend`;
 
   try {
     const response = await fetchApi<FriendsListResponse>(endpoint);

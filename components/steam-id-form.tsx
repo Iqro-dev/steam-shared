@@ -24,7 +24,7 @@ export const formSchema = z.object({
   }),
 });
 
-export function SteamForm({ onSubmit }: SteamFormProps) {
+export function SteamIdForm({ onSubmit }: SteamFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {

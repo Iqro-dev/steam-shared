@@ -1,11 +1,11 @@
 import { useCookies } from "react-cookie";
 import { STEAM_ID_COOKIE } from "../api/constants/cookies";
 
-export function useSteamId() {
+export function useSteamIdCookie() {
   const [cookie, setCookies, removeCookies] = useCookies([STEAM_ID_COOKIE]);
 
   return {
-    steamId: cookie[STEAM_ID_COOKIE] as string,
+    steamIdCookie: cookie[STEAM_ID_COOKIE] as string,
     setSteamIdCookie: (token: string) => {
       setCookies(STEAM_ID_COOKIE, token, {
         path: "/",

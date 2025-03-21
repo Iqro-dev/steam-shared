@@ -1,12 +1,12 @@
 "use client";
 
-import { formSchema, SteamForm } from "@/components/steam-form";
+import { formSchema, SteamIdForm } from "@/components/steam-id-form";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
-import { useSteamId } from "./hooks/use-steam-id";
+import { useSteamIdCookie } from "./hooks/use-steam-id-cookie";
 
 export default function Home() {
-  const { setSteamIdCookie } = useSteamId();
+  const { setSteamIdCookie } = useSteamIdCookie();
   const router = useRouter();
 
   function onSubmit(values: z.infer<typeof formSchema>) {
@@ -14,5 +14,5 @@ export default function Home() {
     router.push("/profile");
   }
 
-  return <SteamForm onSubmit={onSubmit} />;
+  return <SteamIdForm onSubmit={onSubmit} />;
 }

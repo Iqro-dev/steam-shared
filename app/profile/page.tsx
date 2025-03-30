@@ -1,9 +1,9 @@
-import { STEAM_ID_COOKIE } from "../api/constants/cookies";
 import { cookies } from "next/headers";
 import { getFriendsList } from "../api/fetchers/get-friends-list";
 import { getPlayerSummaries } from "../api/fetchers/get-player-summaries";
 import { Game, Player } from "../api/types";
 import { getOwnedGames } from "../api/fetchers/get-owned-games";
+import { STEAM_ID_COOKIE } from "../constants";
 
 export default async function Profile() {
   const steamId = (await cookies()).get(STEAM_ID_COOKIE)?.value;

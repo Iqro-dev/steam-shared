@@ -1,5 +1,5 @@
 import { useCookies } from "react-cookie";
-import { STEAM_ID_COOKIE } from "../api/constants/cookies";
+import { STEAM_ID_COOKIE } from "../constants";
 
 export function useSteamIdCookie() {
   const [cookie, setCookies, removeCookies] = useCookies([STEAM_ID_COOKIE]);

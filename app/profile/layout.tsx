@@ -18,6 +18,7 @@ export default async function Layout({ children }: LayoutProps) {
   return (
     <SidebarProvider>
       <AppSidebar currentPlayer={currentPlayer[0]} />
+
       <main>
         <SidebarTrigger />
         {children}

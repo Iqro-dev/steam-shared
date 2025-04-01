@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { ArrowRight } from "lucide-react";
+import { steamIdFormHints } from "@/app/constants/steam-id-form-hints";
 
 interface SteamFormProps {
   onSubmit: (values: { steamId: string }) => void;
@@ -41,6 +42,7 @@ export function SteamIdForm({ onSubmit }: SteamFormProps) {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Enter your 17-digit Steam ID</FormLabel>
+
               <FormControl>
                 <Input
                   placeholder="7656119xxxxxxxxxx"
@@ -51,6 +53,7 @@ export function SteamIdForm({ onSubmit }: SteamFormProps) {
                   className="transition-all duration-200 focus:scale-[1.02]"
                 />
               </FormControl>
+
               <FormMessage />
             </FormItem>
           )}
@@ -60,29 +63,13 @@ export function SteamIdForm({ onSubmit }: SteamFormProps) {
           <p className="font-medium text-foreground/80">Your Steam ID should:</p>
 
           <ul className="space-y-1.5 cursor-default">
-            <li className="flex items-center gap-2 group">
-              <ArrowRight className="w-4 h-4 text-primary transition-transform group-hover:translate-x-1" />
+            {steamIdFormHints.map((hint) => (
+              <li key={hint} className="flex items-center gap-2 group">
+                <ArrowRight className="w-4 h-4 text-primary transition-transform group-hover:translate-x-1" />
 
-              <span className="group-hover:text-primary transition-colors">
-                Contain exactly 17 digits
-              </span>
-            </li>
-
-            <li className="flex items-center gap-2 group">
-              <ArrowRight className="w-4 h-4 text-primary transition-transform group-hover:translate-x-1" />
-
-              <span className="group-hover:text-primary transition-colors">
-                Start with &apos;7656119&apos;
-              </span>
-            </li>
-
-            <li className="flex items-center gap-2 group">
-              <ArrowRight className="w-4 h-4 text-primary transition-transform group-hover:translate-x-1" />
-
-              <span className="group-hover:text-primary transition-colors">
-                Only contain numbers
-              </span>
-            </li>
+                <span className="group-hover:text-primary transition-colors">{hint}</span>
+              </li>
+            ))}
           </ul>
         </div>
 

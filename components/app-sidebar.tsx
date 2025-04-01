@@ -35,6 +35,7 @@ export function AppSidebar({ currentPlayer }: AppSidebarProps) {
                 <SidebarMenuButton asChild>
                   <Link href={url}>
                     <Icon />
+
                     <span>{title}</span>
                   </Link>
                 </SidebarMenuButton>

@@ -20,7 +20,6 @@
     "no-duplicate-imports": "error",
     "no-unused-expressions": "warn",
     "no-shadow": "warn",
-    "curly": ["warn", "all"],
     "eqeqeq": ["error", "always"],
     "prefer-const": "warn",
     "no-var": "error",

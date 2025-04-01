@@ -5,7 +5,7 @@ import { Game, Player } from "../api/types";
 import { getOwnedGames } from "../api/fetchers/get-owned-games";
 import { STEAM_ID_COOKIE } from "../constants";
 
-export default async function Profile() {
+export default async function ProfilePage() {
   const steamId = (await cookies()).get(STEAM_ID_COOKIE)?.value;
   let steamIds = "";
 

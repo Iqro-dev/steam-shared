@@ -4,12 +4,12 @@ export function middleware(request: NextRequest) {
   const steamIdCookie = request.cookies.get("steam-id");
 
   if (steamIdCookie?.value) {
-    return NextResponse.redirect(new URL("/profile", request.url));
+    return NextResponse.next();
   }
 
-  return NextResponse.next();
+  return NextResponse.redirect(new URL("/", request.url));
 }
 
 export const config = {
-  matcher: "/",
+  matcher: "/profile/:path*",
 };

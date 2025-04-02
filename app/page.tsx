@@ -1,20 +1,24 @@
 "use client";
 
-import { formSchema, SteamIdForm } from "@/components/steam-id-form";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { useSteamIdCookie } from "./hooks/use-steam-id-cookie";
 import { Card, CardTitle } from "@/components/ui/card";
+import { steamIdSchema } from "@/lib/validations/steam-id";
+import { SteamIdForm } from "@/components/form/steam-id-form";
 
 export default function Home() {
   const { setSteamIdCookie } = useSteamIdCookie();
   const router = useRouter();
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    setSteamIdCookie(values.steamId);
-
-    router.push("/profile");
-  }
+  const onSubmit = async (values: z.infer<typeof steamIdSchema>) => {
+    try {
+      setSteamIdCookie(values.steamId);
+      await router.push("/profile");
+    } catch (error) {
+      console.error("Something went wrong:", error);
+    }
+  };
 
   return (
     <div className="w-full flex justify-center pt-12">

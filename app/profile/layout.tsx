@@ -1,8 +1,8 @@
-import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { cookies } from "next/headers";
 import { STEAM_ID_COOKIE } from "../constants";
 import { getPlayerSummaries } from "../api/fetchers/get-player-summaries";
+import { AppSidebar } from "@/components/sidebar/app-sidebar";
 
 export interface LayoutProps {
   children: React.ReactNode;

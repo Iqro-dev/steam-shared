@@ -11,38 +11,40 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { ArrowRight } from "lucide-react";
-import { steamIdFormHints } from "@/app/constants/steam-id-form-hints";
+import { type SteamIdFormValues, steamIdSchema } from "@/lib/validations/steam-id";
+import { SteamIdHints } from "./steam-id-hints";
 
 interface SteamFormProps {
-  onSubmit: (values: { steamId: string }) => void;
+  onSubmit: (values: SteamIdFormValues) => Promise<void>;
 }
 
-export const formSchema = z.object({
-  steamId: z.string().length(17, {
-    message: "Make sure your Steam ID is correct.",
-  }),
-});
-
 export function SteamIdForm({ onSubmit }: SteamFormProps) {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<SteamIdFormValues>({
+    resolver: zodResolver(steamIdSchema),
     defaultValues: {
       steamId: "",
     },
   });
 
+  const handleSubmit = async (values: SteamIdFormValues) => {
+    try {
+      await onSubmit(values);
+    } catch (error) {
+      form.setError("steamId", {
+        message: "An error occurred while validating your Steam ID",
+      });
+    }
+  };
+
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
         <FormField
           control={form.control}
           name="steamId"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Enter your 17-digit Steam ID</FormLabel>
-
               <FormControl>
                 <Input
                   placeholder="7656119xxxxxxxxxx"
@@ -53,25 +55,12 @@ export function SteamIdForm({ onSubmit }: SteamFormProps) {
                   className="transition-all duration-200 focus:scale-[1.02]"
                 />
               </FormControl>
-
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <div className="text-sm text-muted-foreground bg-muted/50 rounded-lg p-4 space-y-2">
-          <p className="font-medium text-foreground/80">Your Steam ID should:</p>
-
-          <ul className="space-y-1.5 cursor-default">
-            {steamIdFormHints.map((hint) => (
-              <li key={hint} className="flex items-center gap-2 group">
-                <ArrowRight className="w-4 h-4 text-primary transition-transform group-hover:translate-x-1" />
-
-                <span className="group-hover:text-primary transition-colors">{hint}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <SteamIdHints />
 
         <Button
           type="submit"

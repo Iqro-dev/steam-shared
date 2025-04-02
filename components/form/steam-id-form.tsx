@@ -15,7 +15,7 @@ import { type SteamIdFormValues, steamIdSchema } from "@/lib/validations/steam-i
 import { SteamIdHints } from "./steam-id-hints";
 
 interface SteamFormProps {
-  onSubmit: (values: SteamIdFormValues) => Promise<void>;
+  onSubmit: (values: SteamIdFormValues) => void;
 }
 
 export function SteamIdForm({ onSubmit }: SteamFormProps) {
@@ -29,7 +29,7 @@ export function SteamIdForm({ onSubmit }: SteamFormProps) {
   const handleSubmit = async (values: SteamIdFormValues) => {
     try {
       await onSubmit(values);
-    } catch (error) {
+    } catch {
       form.setError("steamId", {
         message: "An error occurred while validating your Steam ID",
       });
@@ -45,6 +45,7 @@ export function SteamIdForm({ onSubmit }: SteamFormProps) {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Enter your 17-digit Steam ID</FormLabel>
+
               <FormControl>
                 <Input
                   placeholder="7656119xxxxxxxxxx"
@@ -55,6 +56,7 @@ export function SteamIdForm({ onSubmit }: SteamFormProps) {
                   className="transition-all duration-200 focus:scale-[1.02]"
                 />
               </FormControl>
+
               <FormMessage />
             </FormItem>
           )}

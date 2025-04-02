@@ -78,8 +78,8 @@ function SidebarProvider({
   const [_open, _setOpen] = useState(defaultOpen);
   const open = openProp ?? _open;
   const setOpen = useCallback(
-    (value: boolean | ((value: boolean) => boolean)) => {
-      const openState = typeof value === "function" ? value(open) : value;
+    (newValue: boolean | ((prevValue: boolean) => boolean)) => {
+      const openState = typeof newValue === "function" ? newValue(open) : newValue;
       if (setOpenProp) {
         setOpenProp(openState);
       } else {
@@ -94,7 +94,7 @@ function SidebarProvider({
 
   // Helper to toggle the sidebar.
   const toggleSidebar = useCallback(() => {
-    return isMobile ? setOpenMobile((open) => !open) : setOpen((open) => !open);
+    return isMobile ? setOpenMobile((prevOpen) => !prevOpen) : setOpen((prevOpen) => !prevOpen);
   }, [isMobile, setOpen, setOpenMobile]);
 
   // Adds a keyboard shortcut to toggle the sidebar.

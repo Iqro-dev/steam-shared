@@ -2,19 +2,21 @@
 
 import { useRouter } from "next/navigation";
 import { z } from "zod";
-import { useSteamIdCookie } from "./hooks/use-steam-id-cookie";
 import { Card, CardTitle } from "@/components/ui/card";
 import { steamIdSchema } from "@/lib/validations/steam-id";
 import { SteamIdForm } from "@/components/form/steam-id-form";
+import { useSteamIdCookie } from "./hooks/use-steam-id-cookie";
 
-export default function Home() {
+export default function Login() {
   const { setSteamIdCookie } = useSteamIdCookie();
+
   const router = useRouter();
 
-  const onSubmit = async (values: z.infer<typeof steamIdSchema>) => {
+  const onSubmit = (values: z.infer<typeof steamIdSchema>) => {
     try {
       setSteamIdCookie(values.steamId);
-      await router.push("/profile");
+
+      router.push("/profile");
     } catch (error) {
       console.error("Something went wrong:", error);
     }

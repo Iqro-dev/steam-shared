@@ -8,11 +8,13 @@ import {
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
-  SidebarMenuItem,
+  SidebarMenuSubItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import Link from "next/link";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { PlayerDropdown } from "./player-dropdown";
+import Link from "next/link";
+import { ChevronDown } from "lucide-react";
 
 export interface AppSidebarProps {
   currentPlayer: Player;
@@ -26,23 +28,35 @@ export function AppSidebar({ currentPlayer }: AppSidebarProps) {
       </SidebarHeader>
 
       <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Dashboard</SidebarGroupLabel>
-
-          <SidebarMenu>
-            {sidebarItems.map(({ title, url, icon: Icon }) => (
-              <SidebarMenuItem key={title}>
-                <SidebarMenuButton asChild>
-                  <Link href={url}>
-                    <Icon />
-
+        <SidebarMenu>
+          {sidebarItems.map(({ title, items }) => (
+            <Collapsible key={title} defaultOpen className="group/collapsible">
+              <SidebarGroup>
+                <SidebarGroupLabel asChild>
+                  <CollapsibleTrigger className="flex items-center gap-2 w-full cursor-pointer hover:bg-muted/50 p-2 rounded-md transition-colors">
                     <span>{title}</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            ))}
-          </SidebarMenu>
-        </SidebarGroup>
+
+                    <ChevronDown className="ml-auto h-4 w-4 transition-transform group-data-[state=open]/collapsible:rotate-180" />
+                  </CollapsibleTrigger>
+                </SidebarGroupLabel>
+
+                <CollapsibleContent>
+                  {items.map((item) => (
+                    <SidebarMenuSubItem key={item.title}>
+                      <SidebarMenuButton asChild>
+                        <Link href={item.url} className="flex items-center gap-2">
+                          <item.icon className="h-4 w-4" />
+
+                          <span>{item.title}</span>
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuSubItem>
+                  ))}
+                </CollapsibleContent>
+              </SidebarGroup>
+            </Collapsible>
+          ))}
+        </SidebarMenu>
       </SidebarContent>
 
       <SidebarRail />

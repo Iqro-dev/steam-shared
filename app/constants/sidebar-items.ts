@@ -1,14 +1,14 @@
-import { Contact, Home } from "lucide-react";
+import { Contact } from "lucide-react";
 
 export const sidebarItems = [
   {
     title: "Home",
-    url: "/profile",
-    icon: Home,
-  },
-  {
-    title: "Friends",
-    url: "/profile/friends",
-    icon: Contact,
+    items: [
+      {
+        title: "Friends",
+        url: "/profile/friends",
+        icon: Contact,
+      },
+    ],
   },
 ];

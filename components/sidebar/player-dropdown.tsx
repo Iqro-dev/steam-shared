@@ -9,11 +9,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
 import { Player } from "@/app/api/types";
-import Image from "next/image";
 import { useSteamIdCookie } from "@/app/hooks/use-steam-id-cookie";
 import { redirect } from "next/navigation";
-import { Avatar } from "../ui/avatar";
-import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { PlayerAvatar } from "../common/player-avatar";
 
 export interface PlayerDropdownProps {

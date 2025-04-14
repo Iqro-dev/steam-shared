@@ -18,7 +18,7 @@ const statusConfig: Record<number, { label: string; color: string }> = {
   5: { label: "Looking to Trade", color: "bg-purple-500" },
 };
 
-export function Status({ status, className }: StatusProps) {
+export function FriendStatus({ status, className }: StatusProps) {
   const { label, color } = statusConfig[status] ?? statusConfig[0];
 
   return (

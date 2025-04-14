@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
 import { Player } from "@/app/api/types";
-import { useSteamIdCookie } from "@/app/hooks/use-steam-id-cookie";
+import { useSteamIdCookie } from "@/hooks/use-steam-id-cookie";
 import { redirect } from "next/navigation";
 import { PlayerAvatar } from "../common/player-avatar";
 

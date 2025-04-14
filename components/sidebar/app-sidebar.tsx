@@ -1,5 +1,5 @@
 import { Player } from "@/app/api/types";
-import { sidebarItems } from "@/app/constants";
+import { sidebarItems } from "@/constants";
 import {
   Sidebar,
   SidebarContent,

@@ -1,5 +1,5 @@
 import { ArrowRight } from "lucide-react";
-import { steamIdFormHints } from "@/app/constants/steam-id-form-hints";
+import { steamIdFormHints } from "@/constants/steam-id-form-hints";
 
 export function SteamIdHints() {
   return (

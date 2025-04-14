@@ -5,7 +5,7 @@ import { z } from "zod";
 import { Card, CardTitle } from "@/components/ui/card";
 import { steamIdSchema } from "@/lib/validations/steam-id";
 import { SteamIdForm } from "@/components/form/steam-id-form";
-import { useSteamIdCookie } from "./hooks/use-steam-id-cookie";
+import { useSteamIdCookie } from "@/hooks/use-steam-id-cookie";
 
 export default function Login() {
   const { setSteamIdCookie } = useSteamIdCookie();

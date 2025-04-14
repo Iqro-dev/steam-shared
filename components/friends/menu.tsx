@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import Link from "next/link";
-import { FRIEND_ID } from "@/app/constants/search-params";
+import { FRIEND_ID } from "@/constants/search-params";
 
 export interface FriendMenuProps {
   personaname: string;

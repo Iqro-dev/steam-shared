@@ -5,7 +5,7 @@ import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/s
 import { Separator } from "@radix-ui/react-separator";
 import { cookies } from "next/headers";
 import { getPlayerSummaries } from "../api/fetchers/get-player-summaries";
-import { STEAM_ID_COOKIE } from "../constants";
+import { STEAM_ID_COOKIE } from "@/constants";
 
 export const metadata: Metadata = {
   title: "Steam Shared",

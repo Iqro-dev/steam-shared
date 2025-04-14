@@ -1,7 +1,7 @@
-import { STEAM_ID_COOKIE } from "@/app/constants";
-import { FRIEND_ID } from "@/app/constants/search-params";
-import { SharedGamesPageProps } from "@/app/types/page";
-import { getSharedGames } from "@/app/utils/get-shared-games";
+import { STEAM_ID_COOKIE } from "@/constants";
+import { FRIEND_ID } from "@/constants/search-params";
+import { SharedGamesPageProps } from "@/types/page";
+import { getSharedGames } from "@/utils/get-shared-games";
 import { SharedGamesList } from "@/components/shared-games/list";
 import { cookies } from "next/headers";
 

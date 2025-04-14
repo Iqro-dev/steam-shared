@@ -1,6 +1,6 @@
-import { STEAM_ID_COOKIE } from "@/app/constants";
+import { STEAM_ID_COOKIE } from "@/constants";
 import { FriendsList } from "@/components/friends/list";
-import { getFriends } from "@/app/utils/get-friends";
+import { getFriends } from "@/utils/get-friends";
 import { cookies } from "next/headers";
 
 export default async function FriendsPage() {

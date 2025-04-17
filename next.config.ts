@@ -5,7 +5,12 @@ const nextConfig: NextConfig = {
     remotePatterns: [{
       protocol: "https",
       hostname: 'avatars.steamstatic.com',
-    }],
+    },
+    {
+      protocol: "http",
+      hostname: 'media.steampowered.com',
+    }
+  ],
   },
 };
 

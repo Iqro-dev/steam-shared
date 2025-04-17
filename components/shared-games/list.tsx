@@ -1,4 +1,5 @@
 import { Game } from "@/app/api/types";
+import { SharedGamesItem } from "./item";
 
 interface SharedGamesListProps {
   games: Game[];
@@ -6,12 +7,10 @@ interface SharedGamesListProps {
 
 export function SharedGamesList({ games }: SharedGamesListProps) {
   return (
-    <div>
+    <ul className="space-y-3">
       {games.map((game) => (
-        <div key={game.appid} className="mb-4">
-          <h2 className="text-xl font-bold">{game.name}</h2>
-        </div>
+        <SharedGamesItem key={game.appid} game={game} />
       ))}
-    </div>
+    </ul>
   );
 }

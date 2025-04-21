@@ -24,6 +24,7 @@ export function FriendStatus({ status, className }: StatusProps) {
   return (
     <div className="flex items-center gap-2">
       <div className={cn("size-2 rounded-full", color, className)} />
+
       <span className="text-xs text-muted-foreground">{label}</span>
     </div>
   );

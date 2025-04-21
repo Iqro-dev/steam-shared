@@ -1,3 +1,5 @@
+"use server";
+
 import { getOwnedGames } from "@/app/api/fetchers/get-owned-games";
 
 export async function getSharedGames(userId: string, friendId: string) {
@@ -6,8 +8,14 @@ export async function getSharedGames(userId: string, friendId: string) {
     getOwnedGames(userId, true, true),
   ]);
 
-  return games.filter((game) => {
+  if (!games || !yourGames) {
+    return [];
+  }
+
+  const filteredGames = games.filter((game) => {
     const yourGame = yourGames.find((ownedGame) => ownedGame.appid === game.appid);
     return yourGame;
   });
+
+  return filteredGames;
 }

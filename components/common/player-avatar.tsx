@@ -14,7 +14,7 @@ export function PlayerAvatar({ src, alt, fallback, classname }: PlayerAvatarProp
     <Avatar className={cn("select-none", classname)}>
       <Image src={src} alt={alt} width={100} height={100} draggable={false} />
 
-      <AvatarFallback>{fallback}</AvatarFallback>
+      {!src && <AvatarFallback>{fallback}</AvatarFallback>}
     </Avatar>
   );
 }

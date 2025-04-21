@@ -12,7 +12,9 @@ import {
 
 export function Breadcrumbs() {
   const segments = useSelectedLayoutSegments();
+
   const isSubPage = segments.length > 0;
+
   const currentPage = segments[segments.length - 1];
 
   return (

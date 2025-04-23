@@ -6,13 +6,13 @@ export interface PlayerAvatarProps {
   src: string;
   fallback: string;
   alt: string;
-  classname?: string;
+  className?: string;
 }
 
-export function PlayerAvatar({ src, alt, fallback, classname }: PlayerAvatarProps) {
+export function PlayerAvatar({ src, alt, fallback, className }: PlayerAvatarProps) {
   return (
-    <Avatar className={cn("select-none", classname)}>
-      <Image src={src} alt={alt} width={100} height={100} draggable={false} />
+    <Avatar className={cn("select-none", className)}>
+      <Image src={src} alt={alt} fill draggable={false} />
 
       {!src && <AvatarFallback>{fallback}</AvatarFallback>}
     </Avatar>

@@ -27,53 +27,73 @@ export function SharedGamesUser({
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
-      <DropdownMenuTrigger asChild>
-        <Button
-          variant="outline"
-          className={cn(
-            "p-0 h-24 w-24 rounded-lg border-2 transition-all duration-200 hover:ring-2 hover:ring-primary hover:ring-offset-2 hover:ring-offset-background",
-            isOpen && "ring-2 ring-primary ring-offset-2 ring-offset-background"
-          )}
-        >
-          <div className="relative w-full h-full">
-            {selectedUser && (
-              <PlayerAvatar
-                src={selectedUser.avatarfull}
-                fallback={selectedUser.personaname}
-                alt={selectedUser.personaname}
-                classname="w-full h-full rounded-none"
-              />
+    <div className="flex flex-col justify-center items-center gap-4">
+      <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant="outline"
+            className={cn(
+              "p-0 h-32 w-32 rounded-xl border-2 transition-all duration-200 hover:ring-2 hover:ring-primary hover:ring-offset-2 hover:ring-offset-background",
+              isOpen && "ring-2 ring-primary ring-offset-2 ring-offset-background"
             )}
+          >
+            <div className="relative w-full h-full">
+              {selectedUser ? (
+                <>
+                  <PlayerAvatar
+                    src={selectedUser.avatarfull}
+                    fallback={selectedUser.personaname}
+                    alt={selectedUser.personaname}
+                    className="w-full h-full rounded-lg"
+                  />
 
-            <div className="absolute bottom-0 right-0 bg-primary text-primary-foreground p-1 rounded-tl-md">
-              <ChevronDown className="h-4 w-4" />
+                  <div className="absolute bottom-2 right-2 bg-primary text-primary-foreground p-1.5 rounded-lg shadow-md">
+                    <ChevronDown className="h-4 w-4" />
+                  </div>
+                </>
+              ) : (
+                <div className="w-full h-full flex items-center justify-center bg-muted rounded-lg">
+                  <ChevronDown className="h-8 w-8 text-muted-foreground" />
+                </div>
+              )}
             </div>
+          </Button>
+        </DropdownMenuTrigger>
+
+        <DropdownMenuContent
+          align="center"
+          className="w-72 p-3"
+          sideOffset={8}
+          collisionPadding={20}
+        >
+          <div className="grid grid-cols-4 gap-2">
+            {availableOptions.map((option) => (
+              <DropdownMenuItem
+                key={option.steamid}
+                className="flex flex-col items-center p-2 cursor-pointer hover:bg-accent rounded-lg focus:bg-accent group"
+                onClick={() => onSelectUser(option)}
+              >
+                <PlayerAvatar
+                  src={option.avatarfull}
+                  fallback={option.personaname}
+                  alt={option.personaname}
+                  className="group-hover:ring-2 group-hover:ring-primary transition-all duration-200"
+                />
+
+                <span className="text-xs font-medium text-center line-clamp-1 w-full mt-2 group-hover:text-primary transition-colors">
+                  {option.personaname}
+                </span>
+              </DropdownMenuItem>
+            ))}
           </div>
-        </Button>
-      </DropdownMenuTrigger>
+        </DropdownMenuContent>
+      </DropdownMenu>
 
-      <DropdownMenuContent align="center" className="w-56 p-2" sideOffset={4} collisionPadding={20}>
-        <div className="grid grid-cols-3 gap-1">
-          {availableOptions.map((option) => (
-            <DropdownMenuItem
-              key={option.steamid}
-              className="flex flex-col items-center p-2 cursor-pointer hover:bg-accent rounded-md focus:bg-accent"
-              onClick={() => onSelectUser(option)}
-            >
-              <PlayerAvatar
-                src={option.avatarfull}
-                fallback={option.personaname}
-                alt={option.personaname}
-              />
-
-              <span className="text-xs font-medium text-center line-clamp-1 w-full mt-1">
-                {option.personaname}
-              </span>
-            </DropdownMenuItem>
-          ))}
-        </div>
-      </DropdownMenuContent>
-    </DropdownMenu>
+      {selectedUser && (
+        <span className="text-lg font-medium text-center max-w-[128px] line-clamp-1">
+          {selectedUser.personaname}
+        </span>
+      )}
+    </div>
   );
 }

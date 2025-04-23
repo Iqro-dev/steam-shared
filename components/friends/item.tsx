@@ -16,7 +16,7 @@ export function FriendItem({
         src={avatarmedium}
         fallback={personaname[0]}
         alt={personaname}
-        classname="w-10 h-10"
+        className="w-10 h-10"
       />
 
       <span className="text-lg">{personaname}</span>

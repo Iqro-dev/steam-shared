@@ -8,7 +8,7 @@ export interface SharedGamesItemProps {
 
 export function SharedGamesItem({ game }: SharedGamesItemProps) {
   return (
-    <li
+    <div
       key={game.appid}
       className="flex items-center space-x-4 p-4 rounded-xl bg-lime-500/80 hover:bg-lime-500/90 transition-all duration-300 cursor-pointer"
     >
@@ -23,6 +23,6 @@ export function SharedGamesItem({ game }: SharedGamesItemProps) {
       </div>
 
       <span className="text-white text-lg font-medium">{game.name}</span>
-    </li>
+    </div>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { Player } from "@/app/api/types";
-import { Search } from "./search";
+import { Search } from "../common/search";
 import { useState } from "react";
 import { FriendItem } from "./item";
 
@@ -21,7 +21,7 @@ export function FriendsList({ friends }: FriendsListProps) {
 
   return (
     <div className="flex flex-col gap-6 w-full ">
-      <Search onSearch={handleSearch} />
+      <Search onSearch={handleSearch} placeholder="Search friends..." className="w-56" />
 
       <div className="flex flex-col gap-2">
         {filteredFriends.map((friend) => (

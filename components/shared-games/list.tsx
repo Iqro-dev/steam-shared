@@ -7,9 +7,10 @@ import { SharedGamesSkeleton } from "./skeleton";
 interface SharedGamesListProps {
   games: Game[];
   isLoading?: boolean;
+  onClick: (game: Game) => void;
 }
 
-export function SharedGamesList({ games, isLoading }: SharedGamesListProps) {
+export function SharedGamesList({ games, isLoading, onClick }: SharedGamesListProps) {
   const [filteredGames, setFilteredGames] = useState<Game[]>(games);
 
   useEffect(() => {
@@ -20,6 +21,7 @@ export function SharedGamesList({ games, isLoading }: SharedGamesListProps) {
     const filtered = term
       ? games.filter((game) => game.name.toLowerCase().includes(term.toLowerCase()))
       : games;
+
     setFilteredGames(filtered);
   };
 
@@ -40,7 +42,7 @@ export function SharedGamesList({ games, isLoading }: SharedGamesListProps) {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
           {filteredGames.map((game) => (
-            <SharedGamesItem key={game.appid} game={game} />
+            <SharedGamesItem key={game.appid} game={game} onClick={onClick} />
           ))}
         </div>
       )}

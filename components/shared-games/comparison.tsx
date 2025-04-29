@@ -6,8 +6,9 @@ import { SharedGamesUser } from "./user";
 import { getSharedGames } from "@/utils/get-shared-games";
 import { SharedGamesList } from "./list";
 import { Users } from "lucide-react";
+import { Hours } from "./hours";
 
-export interface GameComparisonProps {
+interface GameComparisonProps {
   initialUser: Player;
   selectedUser: Player | null;
   availableOptions: Player[];
@@ -20,8 +21,24 @@ export function GameComparison({
 }: GameComparisonProps) {
   const [currentUser, setCurrentUser] = useState<Player>(initialUser);
   const [comparedUser, setComparedUser] = useState<Player | null>(selectedUser);
-  const [games, setGames] = useState<Game[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [comparedGame, setComparedGame] = useState<string>("");
+  const [games, setGames] = useState<{
+    sharedGames: Game[];
+    firstPlayerGames: Game[];
+    secondPlayerGames: Game[];
+  }>({
+    sharedGames: [],
+    firstPlayerGames: [],
+    secondPlayerGames: [],
+  });
+  const [hours, setHours] = useState<{
+    firstPlayerHours: number;
+    secondPlayerHours: number;
+  }>({
+    firstPlayerHours: 0,
+    secondPlayerHours: 0,
+  });
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleCurrentUserSelect = (user: Player) => {
     setCurrentUser(user);
@@ -34,27 +51,47 @@ export function GameComparison({
   useEffect(() => {
     async function handleCompare() {
       if (!comparedUser) {
-        setGames([]);
+        setGames({ sharedGames: [], firstPlayerGames: [], secondPlayerGames: [] });
+
         return;
       }
 
       setIsLoading(true);
 
       try {
-        const sharedGames = await getSharedGames(currentUser.steamid, comparedUser.steamid);
+        const result = await getSharedGames(currentUser.steamid, comparedUser.steamid);
 
-        setGames(sharedGames);
+        setGames(result);
       } catch (error) {
         console.error(error);
 
-        setGames([]);
+        setGames({ sharedGames: [], firstPlayerGames: [], secondPlayerGames: [] });
       } finally {
         setIsLoading(false);
       }
     }
 
+    setComparedGame("");
+
     void handleCompare();
   }, [currentUser, comparedUser]);
+
+  const handleGameClick = (game: Game) => {
+    const firstPlayerHours =
+      games.firstPlayerGames.find((g) => g.appid === game.appid)?.playtime_forever ?? 0;
+
+    const secondPlayerHours =
+      games.secondPlayerGames.find((g) => g.appid === game.appid)?.playtime_forever ?? 0;
+
+    if (game) {
+      setHours({
+        firstPlayerHours,
+        secondPlayerHours,
+      });
+
+      setComparedGame(game.name);
+    }
+  };
 
   return (
     <div className="flex flex-col gap-2">
@@ -76,7 +113,15 @@ export function GameComparison({
         />
       </div>
 
-      <SharedGamesList games={games} isLoading={isLoading} />
+      {comparedGame && (
+        <Hours
+          name={comparedGame}
+          firstPlayerHours={hours.firstPlayerHours}
+          secondPlayerHours={hours.secondPlayerHours}
+        />
+      )}
+
+      <SharedGamesList games={games.sharedGames} isLoading={isLoading} onClick={handleGameClick} />
     </div>
   );
 }

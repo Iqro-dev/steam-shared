@@ -4,13 +4,15 @@ import Image from "next/image";
 
 export interface SharedGamesItemProps {
   game: Game;
+  onClick: (game: Game) => void;
 }
 
-export function SharedGamesItem({ game }: SharedGamesItemProps) {
+export function SharedGamesItem({ game, onClick }: SharedGamesItemProps) {
   return (
     <div
       key={game.appid}
       className="flex items-center space-x-4 p-4 rounded-xl bg-lime-500/80 hover:bg-lime-500/90 transition-all duration-300 cursor-pointer"
+      onClick={() => onClick(game)}
     >
       <div className="p-2 rounded-lg bg-white/30">
         <Image

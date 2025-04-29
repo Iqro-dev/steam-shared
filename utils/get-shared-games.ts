@@ -2,20 +2,28 @@
 
 import { getOwnedGames } from "@/app/api/fetchers/get-owned-games";
 
-export async function getSharedGames(userId: string, friendId: string) {
-  const [games, yourGames] = await Promise.all([
-    getOwnedGames(friendId, true, true),
+export async function getSharedGames(userId: string, secondUserId: string) {
+  const [firstPlayerGames, secondPlayerGames] = await Promise.all([
     getOwnedGames(userId, true, true),
+    getOwnedGames(secondUserId, true, true),
   ]);
 
-  if (!games || !yourGames) {
-    return [];
+  if (!firstPlayerGames || !secondPlayerGames) {
+    return {
+      sharedGames: [],
+      firstPlayerGames: [],
+      secondPlayerGames: [],
+    };
   }
 
-  const filteredGames = games.filter((game) => {
-    const yourGame = yourGames.find((ownedGame) => ownedGame.appid === game.appid);
+  const sharedGames = firstPlayerGames.filter((game) => {
+    const yourGame = secondPlayerGames.find((ownedGame) => ownedGame.appid === game.appid);
     return yourGame;
   });
 
-  return filteredGames;
+  return {
+    sharedGames,
+    firstPlayerGames,
+    secondPlayerGames,
+  };
 }

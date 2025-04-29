@@ -11,7 +11,7 @@ export function FriendItem({
   friend: { personaname, avatarmedium, personastate, steamid },
 }: FriendItemProps) {
   return (
-    <div className="flex flex-row w-full bg-secondary p-4 hover:bg-muted rounded-md items-center gap-3">
+    <div className="flex flex-row bg-secondary p-4 hover:bg-muted rounded-md items-center gap-3">
       <PlayerAvatar
         src={avatarmedium}
         fallback={personaname[0]}
@@ -19,7 +19,7 @@ export function FriendItem({
         className="w-10 h-10"
       />
 
-      <span className="text-lg">{personaname}</span>
+      <span className="text-lg truncate max-w-[300px]">{personaname}</span>
 
       <div className="flex flex-row gap-2 ml-auto">
         <FriendStatus status={personastate} />

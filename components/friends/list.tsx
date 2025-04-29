@@ -20,13 +20,15 @@ export function FriendsList({ friends }: FriendsListProps) {
   };
 
   return (
-    <div className="flex flex-col gap-6 w-full ">
+    <div className="flex flex-col gap-6 w-full">
       <Search onSearch={handleSearch} placeholder="Search friends..." className="w-56" />
 
-      <div className="flex flex-col gap-2">
-        {filteredFriends.map((friend) => (
-          <FriendItem key={friend.steamid} friend={friend} />
-        ))}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+        {filteredFriends
+          .sort((a, b) => a.personaname.localeCompare(b.personaname))
+          .map((friend) => (
+            <FriendItem key={friend.steamid} friend={friend} />
+          ))}
       </div>
     </div>
   );

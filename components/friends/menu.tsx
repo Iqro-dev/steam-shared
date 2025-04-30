@@ -8,14 +8,15 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import Link from "next/link";
-import { FRIEND_ID_PARAM } from "@/constants";
+import { COMPARED_ID_PARAM, CURRENT_ID_PARAM } from "@/constants";
 
 export interface FriendMenuProps {
   personaname: string;
-  steamid: string;
+  currentUserId: string;
+  comparedUserId: string;
 }
 
-export function FriendMenu({ personaname, steamid }: FriendMenuProps) {
+export function FriendMenu({ personaname, comparedUserId, currentUserId }: FriendMenuProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -30,7 +31,11 @@ export function FriendMenu({ personaname, steamid }: FriendMenuProps) {
         <DropdownMenuItem>Profile</DropdownMenuItem>
 
         <DropdownMenuItem>
-          <Link href={`/profile/shared-games?${FRIEND_ID_PARAM}=${steamid}`}>Shared Games</Link>
+          <Link
+            href={`/profile/shared-games?${CURRENT_ID_PARAM}=${currentUserId}&${COMPARED_ID_PARAM}=${comparedUserId}`}
+          >
+            Shared Games
+          </Link>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

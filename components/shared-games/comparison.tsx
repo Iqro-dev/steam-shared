@@ -3,34 +3,26 @@
 import { Game, Player } from "@/app/api/types";
 import { useEffect, useState } from "react";
 import { SharedGamesUser } from "./user";
-import { getSharedGames } from "@/utils/get-shared-games";
 import { SharedGamesList } from "./list";
 import { Users } from "lucide-react";
 import { Hours } from "./hours";
 
 interface GameComparisonProps {
-  initialUser: Player;
-  selectedUser: Player | null;
+  currentUser: Player;
+  comparedUser: Player | null;
+  currentUserGames: Game[];
+  comparedUserGames: Game[];
   availableOptions: Player[];
 }
 
 export function GameComparison({
-  initialUser,
+  currentUser,
+  comparedUser,
+  currentUserGames,
+  comparedUserGames,
   availableOptions,
-  selectedUser,
 }: GameComparisonProps) {
-  const [currentUser, setCurrentUser] = useState<Player>(initialUser);
-  const [comparedUser, setComparedUser] = useState<Player | null>(selectedUser);
-  const [comparedGame, setComparedGame] = useState<string>("");
-  const [games, setGames] = useState<{
-    sharedGames: Game[];
-    firstPlayerGames: Game[];
-    secondPlayerGames: Game[];
-  }>({
-    sharedGames: [],
-    firstPlayerGames: [],
-    secondPlayerGames: [],
-  });
+  const [selectedGame, setSelectedGame] = useState<Game | null>(null);
   const [hours, setHours] = useState<{
     firstPlayerHours: number;
     secondPlayerHours: number;
@@ -38,68 +30,37 @@ export function GameComparison({
     firstPlayerHours: 0,
     secondPlayerHours: 0,
   });
-  const [isLoading, setIsLoading] = useState(false);
 
-  const handleCurrentUserSelect = (user: Player) => {
-    setCurrentUser(user);
-  };
+  const sharedGames = currentUserGames.filter((game) =>
+    comparedUserGames.some((comparedGame) => comparedGame.appid === game.appid)
+  );
 
-  const handleComparedUserSelect = (user: Player) => {
-    setComparedUser(user);
+  const handleGameClick = (clickedGame: Game) => {
+    if (clickedGame) {
+      setHours({
+        firstPlayerHours:
+          currentUserGames.find((game) => game.appid === clickedGame.appid)?.playtime_forever ?? 0,
+        secondPlayerHours:
+          comparedUserGames.find((game) => game.appid === clickedGame.appid)?.playtime_forever ?? 0,
+      });
+
+      setSelectedGame(clickedGame);
+    }
   };
 
   useEffect(() => {
-    async function handleCompare() {
-      if (!comparedUser) {
-        setGames({ sharedGames: [], firstPlayerGames: [], secondPlayerGames: [] });
-
-        return;
-      }
-
-      setIsLoading(true);
-
-      try {
-        const result = await getSharedGames(currentUser.steamid, comparedUser.steamid);
-
-        setGames(result);
-      } catch (error) {
-        console.error(error);
-
-        setGames({ sharedGames: [], firstPlayerGames: [], secondPlayerGames: [] });
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    setComparedGame("");
-
-    void handleCompare();
+    setSelectedGame(null);
   }, [currentUser, comparedUser]);
-
-  const handleGameClick = (game: Game) => {
-    const firstPlayerHours =
-      games.firstPlayerGames.find((g) => g.appid === game.appid)?.playtime_forever ?? 0;
-
-    const secondPlayerHours =
-      games.secondPlayerGames.find((g) => g.appid === game.appid)?.playtime_forever ?? 0;
-
-    if (game) {
-      setHours({
-        firstPlayerHours,
-        secondPlayerHours,
-      });
-
-      setComparedGame(game.name);
-    }
-  };
 
   return (
     <div className="flex flex-col gap-2">
       <div className="flex flex-row justify-center items-start gap-8 md:gap-12">
         <SharedGamesUser
-          availableOptions={[initialUser, ...availableOptions]}
+          currentUserSteamId={currentUser.steamid}
+          comparedUserSteamId={comparedUser?.steamid}
+          isCurrentUser={true}
+          availableOptions={[currentUser, ...availableOptions]}
           selectedUser={currentUser}
-          onSelectUser={handleCurrentUserSelect}
         />
 
         <div className="flex items-center justify-center h-12 w-12 aspect-square rounded-full bg-secondary self-center">
@@ -107,21 +68,23 @@ export function GameComparison({
         </div>
 
         <SharedGamesUser
-          availableOptions={[initialUser, ...availableOptions]}
+          currentUserSteamId={currentUser.steamid}
+          comparedUserSteamId={comparedUser?.steamid}
+          isCurrentUser={false}
+          availableOptions={availableOptions}
           selectedUser={comparedUser}
-          onSelectUser={handleComparedUserSelect}
         />
       </div>
 
-      {comparedGame && (
+      {selectedGame && (
         <Hours
-          name={comparedGame}
+          name={selectedGame.name}
           firstPlayerHours={hours.firstPlayerHours}
           secondPlayerHours={hours.secondPlayerHours}
         />
       )}
 
-      <SharedGamesList games={games.sharedGames} isLoading={isLoading} onClick={handleGameClick} />
+      <SharedGamesList games={sharedGames} onClick={handleGameClick} />
     </div>
   );
 }

@@ -12,17 +12,23 @@ import { ChevronDown } from "lucide-react";
 import { Button } from "../ui/button";
 import { useState } from "react";
 import { Player } from "@/app/api/types";
+import Link from "next/link";
+import { COMPARED_ID_PARAM, CURRENT_ID_PARAM } from "@/constants";
 
 export interface SharedGamesUserProps {
   selectedUser: Player | null;
-  onSelectUser: (user: Player) => void;
   availableOptions: Player[];
+  currentUserSteamId: string;
+  comparedUserSteamId: string | null | undefined;
+  isCurrentUser: boolean;
 }
 
 export function SharedGamesUser({
   selectedUser,
-  onSelectUser,
   availableOptions,
+  currentUserSteamId,
+  comparedUserSteamId,
+  isCurrentUser,
 }: SharedGamesUserProps) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -68,22 +74,27 @@ export function SharedGamesUser({
         >
           <div className="grid grid-cols-4 gap-2">
             {availableOptions.map((option) => (
-              <DropdownMenuItem
+              <Link
                 key={option.steamid}
-                className="flex flex-col items-center p-2 cursor-pointer hover:bg-accent rounded-lg focus:bg-accent group"
-                onClick={() => onSelectUser(option)}
+                href={
+                  isCurrentUser
+                    ? `?${CURRENT_ID_PARAM}=${option.steamid}&${COMPARED_ID_PARAM}=${comparedUserSteamId || ""}`
+                    : `?${CURRENT_ID_PARAM}=${currentUserSteamId}&${COMPARED_ID_PARAM}=${option.steamid}`
+                }
               >
-                <PlayerAvatar
-                  src={option.avatarfull}
-                  fallback={option.personaname}
-                  alt={option.personaname}
-                  className="group-hover:ring-2 group-hover:ring-primary transition-all duration-200"
-                />
+                <DropdownMenuItem className="flex flex-col items-center p-2 cursor-pointer hover:bg-accent rounded-lg focus:bg-accent group">
+                  <PlayerAvatar
+                    src={option.avatarfull}
+                    fallback={option.personaname}
+                    alt={option.personaname}
+                    className="group-hover:ring-2 group-hover:ring-primary transition-all duration-200"
+                  />
 
-                <span className="text-xs font-medium text-center line-clamp-1 w-full mt-2 group-hover:text-primary transition-colors">
-                  {option.personaname}
-                </span>
-              </DropdownMenuItem>
+                  <span className="text-xs font-medium text-center line-clamp-1 w-full mt-2 group-hover:text-primary transition-colors">
+                    {option.personaname}
+                  </span>
+                </DropdownMenuItem>
+              </Link>
             ))}
           </div>
         </DropdownMenuContent>

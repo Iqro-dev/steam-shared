@@ -1,7 +1,8 @@
-import { FRIEND_ID_PARAM } from "@/constants";
+import { COMPARED_ID_PARAM, CURRENT_ID_PARAM } from "@/constants";
 
 export type SharedGamesPageSearchParams = {
-  [FRIEND_ID_PARAM]: string;
+  [CURRENT_ID_PARAM]: string;
+  [COMPARED_ID_PARAM]: string;
 };
 
 export type SharedGamesPageProps = {

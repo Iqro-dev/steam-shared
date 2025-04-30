@@ -5,10 +5,12 @@ import { FriendMenu } from "./menu";
 
 export interface FriendItemProps {
   friend: Player;
+  currentUserId: string;
 }
 
 export function FriendItem({
   friend: { personaname, avatarmedium, personastate, steamid },
+  currentUserId,
 }: FriendItemProps) {
   return (
     <div className="flex flex-row bg-secondary p-4 hover:bg-muted rounded-md items-center gap-3">
@@ -24,7 +26,11 @@ export function FriendItem({
       <div className="flex flex-row gap-2 ml-auto">
         <FriendStatus status={personastate} />
 
-        <FriendMenu personaname={personaname} steamid={steamid} />
+        <FriendMenu
+          personaname={personaname}
+          currentUserId={currentUserId}
+          comparedUserId={steamid}
+        />
       </div>
     </div>
   );

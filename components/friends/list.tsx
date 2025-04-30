@@ -7,9 +7,10 @@ import { FriendItem } from "./item";
 
 export interface FriendsListProps {
   friends: Player[];
+  currentUserId: string;
 }
 
-export function FriendsList({ friends }: FriendsListProps) {
+export function FriendsList({ friends, currentUserId }: FriendsListProps) {
   const [filteredFriends, setFilteredFriends] = useState<Player[]>(friends);
 
   const handleSearch = (term: string) => {
@@ -27,7 +28,7 @@ export function FriendsList({ friends }: FriendsListProps) {
         {filteredFriends
           .sort((a, b) => a.personaname.localeCompare(b.personaname))
           .map((friend) => (
-            <FriendItem key={friend.steamid} friend={friend} />
+            <FriendItem key={friend.steamid} friend={friend} currentUserId={currentUserId} />
           ))}
       </div>
     </div>

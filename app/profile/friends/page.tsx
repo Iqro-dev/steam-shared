@@ -5,11 +5,14 @@ import { cookies } from "next/headers";
 
 export default async function FriendsPage() {
   const steamId = (await cookies()).get(STEAM_ID_COOKIE)?.value;
+
+  if (!steamId) return null;
+
   const { friends } = await getFriends(steamId);
 
   return (
     <div className="flex flex-col gap-4 p-5">
-      <FriendsList friends={friends} />
+      <FriendsList friends={friends} currentUserId={steamId} />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { Player } from "@/app/api/types";
-import { sidebarItems } from "@/constants";
+import { CURRENT_ID_PARAM, sidebarItems } from "@/constants";
 import {
   Sidebar,
   SidebarContent,
@@ -44,7 +44,14 @@ export function AppSidebar({ currentPlayer }: AppSidebarProps) {
                   {items.map((item) => (
                     <SidebarMenuSubItem key={item.title}>
                       <SidebarMenuButton asChild>
-                        <Link href={item.url} className="flex items-center gap-2">
+                        <Link
+                          href={
+                            item.title === "Shared Games"
+                              ? `${item.url}?${CURRENT_ID_PARAM}=${currentPlayer.steamid}`
+                              : item.url
+                          }
+                          className="flex items-center gap-2"
+                        >
                           <item.icon className="h-4 w-4" />
 
                           <span>{item.title}</span>
